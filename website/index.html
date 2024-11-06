@@ -1,0 +1,232 @@
+<!doctype html>
+<script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fa62c117c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Jalen Cheng</title>
+    <link rel="icon" type="image/x-icon" href="faviconv1.png">
+  </head>
+  <body class="dark" id="top">
+    <header class="header center">
+      <h3>
+        <a href="javascript:window.location.reload(true)" class="link"
+          >JC.</a
+        >
+      </h3>
+
+      <nav class="nav center">
+        <ul class="nav__list center">
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#projects">Projects</a>
+          </li>
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#skills">Skills</a>
+          </li>
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#contact">Contact</a>
+          </li>
+        </ul>
+
+        <button type="button" aria-label="toggle theme" class="btn btn--icon">
+          <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
+        </button>
+
+        <button
+          type="button"
+          aria-label="toggle navigation"
+          class="btn btn--icon nav__hamburger"
+        >
+          <i aria-hidden="true" class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- About -->
+      <div class="about center">
+        <h1>Hi, I am <span class="about__name">Jalen Cheng.</span></h1>
+        <h2><div id="name"></div></h2>
+        <p class="about__desc">
+          As a computer engineering student at the University of Waterloo, I strive to challenge myself and drive an impact in the world. <span class="about__name">Take a look around.</span>
+        </p>
+
+        <div class="about__contact center">
+          <a href="resume.pdf" target="_blank">
+            <span class="btn btn--outline">Resume</span>
+          </a>
+
+          <a
+            href="https://github.com/jalen-cheng"
+            aria-label="github"
+            class="link link--icon"
+          >
+            <i aria-hidden="true" class="fab fa-github"></i>
+          </a>
+
+          <a
+            href="https://linkedin.com/in/jalencheng"
+            aria-label="linkedin"
+            class="link link--icon"
+          >
+            <i aria-hidden="true" class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <section id="projects" class="section projects">
+        <h2 class="section__title">Projects</h2>
+
+        <div class="projects__grid"> <!--What's on my mind: Building, Learning, Growing-->
+          <div class="project">
+            <h3>EasyASL</h3>
+            <p class="project__description">
+              Hackathon winner accomplished within 36 hours. 
+              EasyASL provides a comprehensive tool for the hard-of-hearing community and other individuals who use American Sign Language (ASL). 
+              EasyASL makes it easy for you to learn, translate, and get certified in ASL.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">HTML</li>
+              <li class="project__stack-item">Next.js</li>
+              <li class="project__stack-item">TypeScript</li>
+              <li class="project__stack-item">React</li>
+              <li class="project__stack-item">Figma</li>
+            </ul>
+
+            <a
+              href="https://github.com/azselim/EasyASL"
+              aria-label="source code"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://devpost.com/software/easyasl"
+              aria-label="live preview"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="project">
+            <h3>IFDAA (in progress)</h3>
+            <p class="project__description">
+              Personal project completed for ECE198 course. The Intelligent Fall Detection Alert Apparatus (IFDAA) provides a robust, cost-effective solution for at-risk individuals.
+              As an AIO patient care device, it can successfully detect, communicate and log falls for optimal wellbeing. Developed using 2 STM32F401RE Nucleo boards and a custom-modelled case. 
+
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">C++</li>
+              <li class="project__stack-item">AutoDesk Fusion</li>
+              <li class="project__stack-item">draw.io</li>
+            </ul>
+
+            <a
+              href="https://github.com"
+              aria-label="source code"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://example.com"
+              aria-label="live preview"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="project">
+            <h3>Project 3</h3>
+            <p class="project__description">
+              Announcement 11/11/24
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">???</li>
+              <li class="project__stack-item">???</li>
+              <li class="project__stack-item">???</li>
+            </ul>
+
+            <a
+              href="https://github.com"
+              aria-label="source code"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://example.com"
+              aria-label="live preview"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section skills" id="skills"> <!--Soft skills-->
+        <h2 class="section__title">Skills</h2>
+        <ul class="skills__list">
+          <li class="skills__list-item btn btn--plain">C++</li>
+          <li class="skills__list-item btn btn--plain">HTML</li>
+          <li class="skills__list-item btn btn--plain">CSS</li>
+          <li class="skills__list-item btn btn--plain">JavaScript</li>
+          <li class="skills__list-item btn btn--plain">TypeScript</li>
+          <li class="skills__list-item btn btn--plain">React</li>
+          <li class="skills__list-item btn btn--plain">Figma</li>
+          <li class="skills__list-item btn btn--plain">Git</li>
+          <li class="skills__list-item btn btn--plain">OpenAPI</li>
+          <li class="skills__list-item btn btn--plain">CloudAPI</li>
+          <li class="skills__list-item btn btn--plain">PicsArtAPI</li>
+        </ul>
+      </section>
+
+      <!-- Contact -->
+      <section class="section contact center" id="contact">
+        <h2 class="section__title"> Contact </h2>
+          <a href="mailto:jalen.cheng@uwaterloo.ca">
+            <span class="btn btn--outline">Email me</span>
+          </a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a
+        href="https://github.com/jalen-cheng/website"
+        class="link footer__link"
+      >
+        Created By Jalen Cheng
+      </a>
+    </footer>
+
+    <div class="scroll-container">
+      <div class="scroll-top">
+        <a aria-label="Scroll up" href="#top">
+          <i aria-hidden="true" class="fas fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+
+<!--Personal Section Page-->
+<!--Fade Effects-->
