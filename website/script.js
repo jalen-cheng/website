@@ -1,8 +1,5 @@
-// =======================
-// ORIGINAL + MODAL ADDITIONS
-// =======================
+// Main theme and navigation functionality
 const body = document.body;
-
 const btnTheme = document.querySelector('.fa-moon');
 const btnHamburger = document.querySelector('.fa-bars');
 
@@ -50,19 +47,25 @@ const displayList = () => {
 
 btnHamburger.addEventListener('click', displayList);
 
+// Updated scroll functionality - always works regardless of page height
 const scrollUp = () => {
   const btnScrollTop = document.querySelector('.scroll-top');
-
-  if (body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-    btnScrollTop.style.display = 'block';
+  
+  // Show scroll button after scrolling down 300px
+  if (window.scrollY > 300) {
+    btnScrollTop.classList.add('show');
   } else {
-    btnScrollTop.style.display = 'none';
+    btnScrollTop.classList.remove('show');
   }
 };
 
-document.addEventListener('scroll', scrollUp);
+// Add scroll event listener 
+window.addEventListener('scroll', scrollUp, { passive: true });
 
-// Typewriter effect
+// Initialize scroll button visibility on page load
+document.addEventListener('DOMContentLoaded', scrollUp);
+
+// Typewriter effect (keep as is)
 var nameElement = document.getElementById('name');
 if (nameElement) {
   var typewriter = new Typewriter(nameElement, {
@@ -84,39 +87,70 @@ if (nameElement) {
     .start();
 }
 
-// =======================
-// FADE-IN/OUT LOGIC (UPDATED)
-// =======================
-const hepfade = document.getElementById('hep');
+// ==========================================
+// IMPROVED SECTION FADE-IN USING INTERSECTION OBSERVER
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Select all elements with the 'fade-in' class
+  const fadeElements = document.querySelectorAll('.fade-in');
+  
+  // Create Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      // If element is in viewport
+      if (entry.isIntersecting) {
+        // Add 'show' class to make it visible
+        entry.target.classList.add('show');
+        // Stop observing the element after it's shown
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null, // viewport
+    threshold: 0.1, // 10% of the element must be visible
+    rootMargin: '0px 0px -50px 0px' // triggers slightly before element enters viewport
+  });
+  
+  // Start observing each fade element
+  fadeElements.forEach(element => {
+    observer.observe(element);
+  });
 
-// Check scroll position for fade effects
-function checkScroll() {
-  if (!hepfade) return;
-
-  // Scroll position to trigger fade effect
-  if (window.scrollY > 150) {
-    // Apply fade-in if not already added
-    if (!hepfade.classList.contains('fade-in')) {
-      hepfade.classList.add('fade-in');
-      hepfade.classList.remove('fade-out');
-    }
-  } else {
-    // Apply fade-out if not already added
-    if (!hepfade.classList.contains('fade-out')) {
-      hepfade.classList.add('fade-out');
-      hepfade.classList.remove('fade-in');
-    }
+  // FIXED: Handle homepage special sections
+  const hepSection = document.getElementById('hep');
+  if (hepSection) {
+    // Make sure hep section is always visible
+    hepSection.classList.add('show');
+    
+    // Also make sure all the child elements inside hep are visible
+    const hepItems = hepSection.querySelectorAll('.hep');
+    hepItems.forEach(item => {
+      item.classList.add('show');
+    });
   }
-}
+  
+  // FIXED: Make sure all headers are consistent
+  const headerLogo = document.querySelector('.header h3');
+  if (headerLogo) {
+    headerLogo.style.fontSize = '1.5rem';
+  }
+  
+  // FIXED: Ensure navigation items have consistent size
+  const navItems = document.querySelectorAll('.nav__list-item a');
+  navItems.forEach(item => {
+    item.style.fontSize = '1rem';
+  });
+  
+  // FIXED: Ensure footer has consistent text size
+  const footerLink = document.querySelector('.footer__link');
+  if (footerLink) {
+    footerLink.style.fontSize = '0.9rem';
+  }
+});
 
-document.addEventListener('DOMContentLoaded', checkScroll);
-window.addEventListener('scroll', checkScroll);
-
-// =======================
-// MODAL LOGIC (NEW)
-// =======================
-
-// Opens a modal by ID
+// ==========================================
+// MODAL FUNCTIONALITY
+// ==========================================
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
@@ -124,7 +158,6 @@ function openModal(modalId) {
   }
 }
 
-// Closes a modal by ID
 function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
@@ -132,7 +165,7 @@ function closeModal(modalId) {
   }
 }
 
-// Close the modal if the user clicks anywhere outside the modal content
+// Close modal on outside click
 window.onclick = function (event) {
   const modals = document.getElementsByClassName('modal');
   for (let i = 0; i < modals.length; i++) {

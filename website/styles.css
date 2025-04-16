@@ -17,6 +17,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -24,6 +25,9 @@ body {
   line-height: 1.5;
   color: var(--clr-fg);
   background-color: var(--clr-bg);
+  min-height: 100vh; /* Ensures body takes at least full viewport height */
+  display: flex;
+  flex-direction: column;
 }
 
 .light {
@@ -132,6 +136,7 @@ button {
   color: var(--clr-fg);
   text-transform: lowercase;
   font-weight: 500;
+  font-size: 1rem; /* FIXED: Consistent font size for nav links */
 }
 
 .link--icon {
@@ -192,6 +197,8 @@ button {
 .btn--icon {
   padding: 0;
   font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btn--icon:hover,
@@ -217,40 +224,48 @@ button {
   max-width: 1100px;
   width: 95%;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+}
+
+/* FIXED: Consistent logo size */
+.header h3 {
+  font-size: 1.5rem;
 }
 
 main {
   max-width: 1100px;
   width: 95%;
   margin: 0 auto;
-  padding-bottom: 30vh;
+  flex: 1 0 auto; /* Grows to fill available space */
   animation: fadein ease 2.5s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+  padding-bottom: 2em;
 }
 
 .section {
-  opacity: 1;
+  margin-top: 3em; /* FIXED: Consistent section margin */
+  padding-bottom: 3em; /* FIXED: Consistent section padding */
+  min-height: auto; /* FIXED: Removed fixed height to prevent excessive spacing */
 }
 
 .section__title {
   text-align: center;
   margin-bottom: 1em;
   text-transform: uppercase;
-}
-
-.spacer {
-  padding-bottom: 20vh;
+  margin-top: 3em; /* FIXED: Consistent title spacing from top */
 }
 
 .nav__list {
-  margin-right: 1.5em;
   display: flex;
+  gap: 1.5em;
+  margin: 0;
 }
 
 .nav__list-item {
-  margin-left: 1.5em;
+  margin: 0; /* Removed individual margins */
 }
 
 .nav__hamburger {
@@ -353,33 +368,31 @@ main {
 }
 
 /*=========================
-  MODAL STYLING (NEW)
+  MODAL STYLING 
 =========================*/
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 9999; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100%; 
   height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* Modal Content Box */
 .modal-content {
   background-color: var(--clr-bg-alt);
-  margin: 10% auto; /* 10% from the top and centered */
+  margin: 10% auto;
   padding: 2em;
   max-width: 600px;
   border-radius: 8px;
-  position: relative; /* For the close button */
+  position: relative;
   color: var(--clr-fg);
   box-shadow: var(--shadow);
 }
 
-/* Close Button (X) */
 .close {
   position: absolute;
   top: 1em;
@@ -390,7 +403,7 @@ main {
 }
 
 /*========================
-  ABOUT PAGE LAYOUT (NEW)
+  ABOUT PAGE LAYOUT
 ========================*/
 
 .about__list {
@@ -408,13 +421,16 @@ main {
   justify-content: center;
   gap: 2em;
   margin-top: 2em;
-  flex-wrap: wrap; /* ensures it wraps on smaller screens */
+  flex-wrap: wrap;
 }
 
 .about__image {
   width: 250px; 
   max-width: 100%;
-  border-radius: 50%; /* If you want a circular headshot */
+  height: 250px; 
+  max-height: 100%;
+  border: 3px solid var(--clr-fg-alt);
+  border-radius: 50%;
   object-fit: cover;
 }
 
@@ -423,37 +439,35 @@ main {
   line-height: 1.5;
 }
 
-.about__desc {
-  margin-top: 0; /* So text lines up nicely with the image */
-  font-size: 1rem;
-}
-
-.portait {
-  
-
-
-}
-
+/* Fixed footer positioning */
 .footer {
-  padding: 3em 0;
-  margin-top: 4em;
+  padding: 1.5em 0; /* FIXED: Consistent footer padding */
   text-align: center;
+  width: 100%;
+  margin-top: auto; /* Pushes footer to bottom when content is short */
 }
 
 .footer__link {
-  font-size: 0.9rem;
+  font-size: 0.9rem; /* FIXED: Consistent footer text size */
   font-weight: 700;
   color: var(--clr-fg);
 }
 
 .scroll-top {
-  display: none;
+  display: block; /* FIXED: Always structured the same */
   position: fixed;
   bottom: 1em;
   right: 2em;
   background-color: transparent;
   font-size: 1.8rem;
-  transition: transform 0.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-top.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (max-width: 600px) {
@@ -490,26 +504,12 @@ main {
   .about {
     align-items: flex-start;
     margin-top: 2em;
-    padding-bottom: 12vh;
-  }
-
-  .footer {
-    padding: 2em;
-    margin-top: 3em;
-  }
-
-  .scroll-container {
-    display: none;
-  }
-
-  #hep {
-    opacity: 0; 
-    pointer-events: none;
   }
 }
-  /*========
-   effects
-  ========*/
+
+/*========
+ effects
+========*/
 
 @keyframes fadein {
   0% {
@@ -531,17 +531,21 @@ main {
   }
 }
 
+/* Updated fade system - based on intersection observer */
 .fade-in {
-  opacity: 1;
-  animation: fadein 1.1s ease;
-  pointer-events: auto;
-  animation-fill-mode: forwards;
-}
-
-.fade-out {
   opacity: 0;
-  animation: fadeout 0.5s ease;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-  
+/* FIXED: Always ensure index page priorities are visible */
+#hep, #hep .hep {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.2s linear;
+}
