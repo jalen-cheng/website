@@ -1,36 +1,63 @@
-// Main theme and navigation functionality
+/**
+ * ==================================================
+ * THEME FUNCTIONALITY
+ * Light/dark mode management with localStorage persistence
+ * ==================================================
+ */
 const body = document.body;
-const btnTheme = document.querySelector('.fa-moon');
+const btnTheme = document.querySelector('.fa-moon') || document.querySelector('.fa-sun');
 const btnHamburger = document.querySelector('.fa-bars');
+
+// Theme-based favicon selector
+const updateFavicon = (theme) => {
+  const favicon = document.querySelector('link[rel="icon"]');
+  if (favicon) {
+    favicon.href = theme === 'light' ? 'attachments/favlight.png' : 'attachments/favdark.png';
+  }
+};
+
+// Theme initialization from localStorage or default
+const getBodyTheme = localStorage.getItem('portfolio-theme') || 'light';
+const getBtnTheme = localStorage.getItem('portfolio-btn-theme') || 'fa-sun';
+
+// Apply theme on page load
+document.body.classList.remove('light', 'dark');
+document.body.classList.add(getBodyTheme);
+updateFavicon(getBodyTheme);
 
 const addThemeClass = (bodyClass, btnClass) => {
   body.classList.add(bodyClass);
   btnTheme.classList.add(btnClass);
 };
 
-const getBodyTheme = localStorage.getItem('portfolio-theme');
-const getBtnTheme = localStorage.getItem('portfolio-btn-theme');
-
+// Initialize with stored or default theme
 addThemeClass(getBodyTheme, getBtnTheme);
 
 const isLight = () => body.classList.contains('light');
 
 const setTheme = (bodyClass, btnClass) => {
-  body.classList.remove(localStorage.getItem('portfolio-theme'));
-  btnTheme.classList.remove(localStorage.getItem('portfolio-btn-theme'));
+  body.classList.remove('light', 'dark');
+  btnTheme.classList.remove('fa-sun', 'fa-moon');
 
   addThemeClass(bodyClass, btnClass);
+  updateFavicon(bodyClass);
 
   localStorage.setItem('portfolio-theme', bodyClass);
   localStorage.setItem('portfolio-btn-theme', btnClass);
 };
 
 const toggleTheme = () => {
-  isLight() ? setTheme('dark', 'fa-sun') : setTheme('light', 'fa-moon');
+  isLight() ? setTheme('dark', 'fa-moon') : setTheme('light', 'fa-sun');
 };
 
 btnTheme.addEventListener('click', toggleTheme);
 
+/**
+ * ==================================================
+ * NAVIGATION
+ * Mobile menu toggle functionality
+ * ==================================================
+ */
 const displayList = () => {
   const navUl = document.querySelector('.nav__list');
 
@@ -47,11 +74,15 @@ const displayList = () => {
 
 btnHamburger.addEventListener('click', displayList);
 
-// Updated scroll functionality - always works regardless of page height
+/**
+ * ==================================================
+ * SCROLL FUNCTIONALITY
+ * Show/hide scroll-to-top button based on scroll position
+ * ==================================================
+ */
 const scrollUp = () => {
   const btnScrollTop = document.querySelector('.scroll-top');
   
-  // Show scroll button after scrolling down 300px
   if (window.scrollY > 300) {
     btnScrollTop.classList.add('show');
   } else {
@@ -59,13 +90,15 @@ const scrollUp = () => {
   }
 };
 
-// Add scroll event listener 
 window.addEventListener('scroll', scrollUp, { passive: true });
-
-// Initialize scroll button visibility on page load
 document.addEventListener('DOMContentLoaded', scrollUp);
 
-// Typewriter effect (keep as is)
+/**
+ * ==================================================
+ * TYPEWRITER EFFECT
+ * Animated text for homepage introduction
+ * ==================================================
+ */
 var nameElement = document.getElementById('name');
 if (nameElement) {
   var typewriter = new Typewriter(nameElement, {
@@ -73,7 +106,7 @@ if (nameElement) {
   });
 
   typewriter
-    .typeString('A developer.')
+    .typeString('a developer.')
     .pauseFor(1500)
     .deleteChars(10)
     .typeString('learner.')
@@ -87,70 +120,76 @@ if (nameElement) {
     .start();
 }
 
-// ==========================================
-// IMPROVED SECTION FADE-IN USING INTERSECTION OBSERVER
-// ==========================================
+/**
+ * ==================================================
+ * ANIMATIONS AND VISUAL EFFECTS
+ * Intersection Observer for element fade-in animations
+ * ==================================================
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  // Select all elements with the 'fade-in' class
+  // Determine current page for animation timing
+  const isIndexPage = window.location.pathname === '/' || 
+                     window.location.pathname === '/index.html' || 
+                     window.location.pathname.endsWith('/index.html');
+  
+  // Apply slower animations on non-index pages
+  if (!isIndexPage) {
+    document.querySelectorAll('.fade-in').forEach(element => {
+      element.classList.add('fade-in-slow');
+    });
+  }
+  
+  // Remove transition delays on hep grid items to ensure consistent timing with other fade-ins
+  document.querySelectorAll('.hep__grid a .hep').forEach(element => {
+    element.style.transitionDelay = '0s';
+  });
+  
+  // Configure and apply intersection observer for animations
   const fadeElements = document.querySelectorAll('.fade-in');
   
-  // Create Intersection Observer
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      // If element is in viewport
       if (entry.isIntersecting) {
-        // Add 'show' class to make it visible
         entry.target.classList.add('show');
-        // Stop observing the element after it's shown
         observer.unobserve(entry.target);
       }
     });
   }, {
-    root: null, // viewport
-    threshold: 0.1, // 10% of the element must be visible
-    rootMargin: '0px 0px -50px 0px' // triggers slightly before element enters viewport
+    root: null,
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
   });
   
-  // Start observing each fade element
   fadeElements.forEach(element => {
     observer.observe(element);
   });
 
-  // FIXED: Handle homepage special sections
-  const hepSection = document.getElementById('hep');
-  if (hepSection) {
-    // Make sure hep section is always visible
-    hepSection.classList.add('show');
-    
-    // Also make sure all the child elements inside hep are visible
-    const hepItems = hepSection.querySelectorAll('.hep');
-    hepItems.forEach(item => {
-      item.classList.add('show');
-    });
-  }
-  
-  // FIXED: Make sure all headers are consistent
+  /**
+   * UI CONSISTENCY ADJUSTMENTS
+   * Ensure consistent sizing across elements
+   */
   const headerLogo = document.querySelector('.header h3');
   if (headerLogo) {
     headerLogo.style.fontSize = '1.5rem';
   }
   
-  // FIXED: Ensure navigation items have consistent size
   const navItems = document.querySelectorAll('.nav__list-item a');
   navItems.forEach(item => {
     item.style.fontSize = '1rem';
   });
   
-  // FIXED: Ensure footer has consistent text size
   const footerLink = document.querySelector('.footer__link');
   if (footerLink) {
     footerLink.style.fontSize = '0.9rem';
   }
 });
 
-// ==========================================
-// MODAL FUNCTIONALITY
-// ==========================================
+/**
+ * ==================================================
+ * MODAL FUNCTIONALITY
+ * Display and hide experience details modals
+ * ==================================================
+ */
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
@@ -165,7 +204,7 @@ function closeModal(modalId) {
   }
 }
 
-// Close modal on outside click
+// Close modal when clicking outside content area
 window.onclick = function (event) {
   const modals = document.getElementsByClassName('modal');
   for (let i = 0; i < modals.length; i++) {
