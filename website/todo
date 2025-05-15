@@ -8,3 +8,4 @@
 - Lunero github
 - Color scheme update
 - Fix mobile view
+- Refactor to use ts, react and tailwind for extra aura
