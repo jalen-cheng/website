@@ -469,17 +469,33 @@ main {
     top: 5em;
     right: 0;
     left: 0;
-    padding: 4em 0;
+    padding: 5em 0;
     background: var(--clr-bg);
     width: 0;
     overflow: hidden;
-    transition: width .2s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: width 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 100;
   }
 
-  .display-nav-list { width: 100%; }
+  .display-nav-list {
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+  }
 
   .nav__hamburger { display: flex; margin-left: .8em; }
-  .nav__list-item { margin: .5em 0; }
+  .nav__list-item { 
+    margin: 0.5em 0;
+    text-align: center;
+    width: 100%;
+  }
+  .nav__list-item .link--nav {
+    display: inline-block;
+    padding: 0.5em;
+    font-size: 1.2rem;
+  }
 
   .about { align-items: flex-start; margin-top: 2em; }
 }
@@ -502,12 +518,12 @@ main {
 .fade-in {
   opacity: 0;
   transform: translateY(5px);
-  transition: opacity .6s ease, transform .6s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 /* Add a class for non-index pages with doubled duration */
 .fade-in-slow {
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  transition: opacity 1 ease, transform 1s ease;
 }
 
 .fade-in.show, .fade-in-slow.show {
